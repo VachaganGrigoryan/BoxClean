@@ -72,6 +72,11 @@ final class RailHome extends BaseHome {
     private void addApp(String pkg) {
         View item = item();
         ImageView icon = item.findViewById(R.id.icon);
+        // The icon fills the circle, clipped round by the oval background's outline, with a ring on focus.
+        icon.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        size(icon, 64, 64);
+        item.setClipToOutline(true);
+        item.setForeground(activity.getDrawable(R.drawable.rail_rim));
         try {
             icon.setImageDrawable(activity.getPackageManager().getApplicationIcon(pkg));
         } catch (PackageManager.NameNotFoundException ignored) {
