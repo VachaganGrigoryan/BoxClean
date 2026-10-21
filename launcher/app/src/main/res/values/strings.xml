@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">BoxClean Home</string>
     <string name="settings">Settings</string>
+    <string name="wifi">Wi-Fi</string>
+    <string name="good_morning">Good morning</string>
+    <string name="good_afternoon">Good afternoon</string>
+    <string name="good_evening">Good evening</string>
+    <string name="good_night">Good night</string>
+    <string name="date_format" translatable="false">EEEE, d MMMM</string>
+    <string name="key_service_label">BoxClean remote buttons</string>
+    <string name="key_service_description">Makes the remote\'s Apps button and remapped app buttons work. Sees key presses only, never the screen.</string>
+    <string name="clock_dream">BoxClean Clock</string>
 </resources>

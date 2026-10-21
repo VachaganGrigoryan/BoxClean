@@ -24,8 +24,21 @@ Run `restore lists/3-launcher.txt` before a factory reset.
 After `restore lists/2-personal.txt`, put the Google screensaver back by hand (restore doesn't touch settings):
 `adb shell settings put secure screensaver_components com.google.android.apps.tv.dreamx/.service.Backdrop`.
 
-## Change the dock
-Edit `launcher/app/src/main/res/values/config.xml` (`dock_packages`) and run `launcher/build-install.sh`.
+## Change the dock or the remote buttons
+Edit `launcher/app/src/main/res/values/config.xml` and run `launcher/build-install.sh`:
+- `dock_packages`: the four dock apps, in order.
+- `app_keys`: remote buttons whose own app is off, as `KEYCODE_BUTTON_7:ru.kinopoisk.tv`. On this remote
+  Prime Video = `BUTTON_7`, Xiaomi TV+ = `BUTTON_5`. YouTube and Netflix stay with Xiaomi's own handler
+  (`partnercustomizer`), and Apps opens this launcher's grid.
+
+The buttons go through `KeyService`, an accessibility service that filters keys only and never sees the
+screen. `build-install.sh` re-enables it after every install, because a reinstall unbinds it.
+Check it with `adb shell dumpsys accessibility | grep -A3 'Bound services'`.
+
+Turned back on by hand after the batches: `com.netflix.ninja` (for the Netflix button).
+Screensaver: `settings put secure screensaver_components com.boxclean.home/.ClockDream`.
+
+Look and motion are adapted from CleanYourTV (MIT); see `NOTICE`.
 
 ## Checks
 `uv run ruff check . && uv run ruff format --check . && uv run pytest -q`;

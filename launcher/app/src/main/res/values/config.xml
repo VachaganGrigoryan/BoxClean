@@ -6,4 +6,10 @@
         <item>com.wbd.stream</item>
         <item>com.techcraeft.kinodaran</item>
     </string-array>
+    <!-- Remote buttons whose own app is gone, "KEYCODE_NAME:package" or "keycode:package" (KeyService).
+         Mi Box S 2nd gen remote: Prime Video = BUTTON_7 (194), Xiaomi TV+ = BUTTON_5 (192). -->
+    <string-array name="app_keys" translatable="false">
+        <item>KEYCODE_BUTTON_7:ru.kinopoisk.tv</item>
+        <item>KEYCODE_BUTTON_5:com.techcraeft.kinodaran</item>
+    </string-array>
 </resources>

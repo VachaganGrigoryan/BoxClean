@@ -24,6 +24,21 @@ if ! "$ADB" -s "$S" install -r "$APK"; then
 fi
 
 "$ADB" -s "$S" shell cmd package set-home-activity "$HOME_ACTIVITY"
+
+# Remote buttons (KeyService). A reinstall unbinds it, so drop it from the enabled list and add it back:
+# two writes, so the system sees a change and binds it again. Other enabled services are kept.
+SVC=com.boxclean.home/.KeyService
+"$ADB" -s "$S" shell "s=\$(settings get secure enabled_accessibility_services); \
+s=\$(echo \":\$s:\" | sed -e 's#:$SVC:#:#g' -e 's#^:null:\$#:#' -e 's#^:##' -e 's#:\$##'); \
+settings put secure enabled_accessibility_services \"\$s\"; \
+settings put secure enabled_accessibility_services \"\${s:+\$s:}$SVC\"; \
+settings put secure accessibility_enabled 1"
+sleep 2
+if "$ADB" -s "$S" shell dumpsys accessibility | grep -A3 'Bound services' | grep -q KeyService; then
+  echo "Remote buttons: KeyService bound."
+else
+  echo "WARNING: KeyService is enabled but not bound; check: adb shell dumpsys accessibility" >&2
+fi
 "$ADB" -s "$S" shell input keyevent KEYCODE_HOME
 sleep 2
 FOCUS="$("$ADB" -s "$S" shell dumpsys activity activities | grep -m1 -E 'mFocusedApp|topResumedActivity' || true)"
