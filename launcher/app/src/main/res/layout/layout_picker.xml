@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- LayoutPicker: the home layouts as cards in rows of three over the dimmed home. The dialog's theme is
+     translucent, so this dim is the only background (lint infers the Home theme). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F2000000"
+    android:clipChildren="false"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:ignore="Overdraw">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/outfit_medium"
+        android:letterSpacing="0.22"
+        android:text="@string/choose_layout"
+        android:textAllCaps="true"
+        android:textColor="#8CFFFFFF"
+        android:textSize="13sp" />
+
+    <GridLayout
+        android:id="@+id/cards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:columnCount="3" />
+</LinearLayout>

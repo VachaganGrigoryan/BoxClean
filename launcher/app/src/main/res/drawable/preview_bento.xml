@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picker sketch of the bento layout (written by a script from block coordinates). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp" android:height="68dp"
+    android:viewportWidth="120" android:viewportHeight="68">
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M0,0h58v20h-58z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M62,0h58v44h-58z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M0,24h28v20h-28z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M30,24h28v20h-28z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M0,48h28v20h-28z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M30,48h28v20h-28z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M62,48h28v20h-28z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M92,48h28v20h-28z" />
+</vector>

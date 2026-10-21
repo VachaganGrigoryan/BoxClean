@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One layout in the picker: its block preview and name, a dot on the current one. Bento's cell look. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Cell"
+    android:layout_width="240dp"
+    android:layout_height="168dp"
+    android:background="@drawable/picker_card_bg">
+
+    <ImageView
+        android:id="@+id/preview"
+        android:layout_width="120dp"
+        android:layout_height="68dp"
+        android:layout_margin="20dp"
+        android:duplicateParentState="true"
+        android:importantForAccessibility="no"
+        android:tint="@color/pill_text" />
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/CellLabel" />
+
+    <View
+        android:id="@+id/current"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="22dp"
+        android:background="@drawable/dot"
+        android:backgroundTint="@color/pill_text"
+        android:duplicateParentState="true" />
+</FrameLayout>

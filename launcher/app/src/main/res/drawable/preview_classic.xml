@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picker sketch of the classic layout (written by a script from block coordinates). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp" android:height="68dp"
+    android:viewportWidth="120" android:viewportHeight="68">
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M0,0h30v6h-30z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M86,0h15v6h-15z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M105,0h15v6h-15z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M0,24h44v7h-44z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.3" android:pathData="M0,36h120v20h-120z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M4,39h26v14h-26z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M33,39h26v14h-26z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M62,39h26v14h-26z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M91,39h26v14h-26z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M4,60h26v8h-26z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M33,60h26v8h-26z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M62,60h26v8h-26z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M91,60h26v8h-26z" />
+</vector>
