@@ -1,0 +1,44 @@
+name: Bug report
+description: Something in the launcher or the debloat tool doesn't work as described.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: dropdown
+    id: part
+    attributes:
+      label: Part
+      options:
+        - Launcher (BoxClean Home)
+        - Debloat tool (tools/boxclean.py)
+        - build-install.sh
+    validations:
+      required: true
+  - type: dropdown
+    id: layout
+    attributes:
+      label: Layout (if it's the launcher)
+      options: [Bento, Ribbon, Spotlight, Editorial, Side rail, Classic, Not layout-specific]
+  - type: input
+    id: box
+    attributes:
+      label: Box model and Android version
+      placeholder: Mi Box S 2nd gen, Google TV 11
+    validations:
+      required: true
+  - type: textarea
+    id: probe
+    attributes:
+      label: Output of `TV_HOST=<ip> uv run tools/boxclean.py probe`
+      render: text
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs (optional)
+      description: For a launcher crash, `adb logcat -d -b crash | tail -40`.
+      render: text

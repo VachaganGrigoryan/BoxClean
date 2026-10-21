@@ -1,0 +1,38 @@
+name: Device report
+description: Tell us how BoxClean works on a box other than the Mi Box S 2nd gen.
+labels: [device]
+body:
+  - type: input
+    id: model
+    attributes:
+      label: Box model
+      placeholder: e.g. Mi TV Stick 4K, Chromecast with Google TV
+    validations:
+      required: true
+  - type: textarea
+    id: probe
+    attributes:
+      label: Output of `TV_HOST=<ip> uv run tools/boxclean.py probe`
+      render: text
+    validations:
+      required: true
+  - type: checkboxes
+    id: lists
+    attributes:
+      label: Lists applied
+      options:
+        - label: lists/1-telemetry-ads.txt
+        - label: lists/2-personal.txt
+        - label: lists/3-launcher.txt
+  - type: dropdown
+    id: result
+    attributes:
+      label: Result
+      options: [Everything works, Works with changes (below), Does not work]
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Packages that are missing or named differently, anything that broke, and what you changed.

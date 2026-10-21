@@ -1,5 +1,9 @@
 # BoxClean
 
+[![CI](https://github.com/VachaganGrigoryan/BoxClean/actions/workflows/ci.yml/badge.svg)](https://github.com/VachaganGrigoryan/BoxClean/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/VachaganGrigoryan/BoxClean)](https://github.com/VachaganGrigoryan/BoxClean/releases/latest)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
+
 **Make a Xiaomi Mi Box S 2nd gen quiet, fast and yours.** BoxClean strips the ads, telemetry and
 auto-installs from Google TV over network ADB. It then replaces the stock home screen with a small offline
 launcher that has six layouts to choose from.
@@ -83,11 +87,18 @@ TV_HOST=<ip> uv run tools/boxclean.py shot shots/01.png
 `com.netflix.ninja` was turned back on by hand after the batches, for the remote's Netflix button.
 
 ### 4. Install BoxClean Home
+Build and install from source:
 ```sh
 TV_HOST=<ip> launcher/build-install.sh
 TV_HOST=<ip> uv run tools/boxclean.py disable lists/3-launcher.txt
 ```
-The script builds the launcher, installs it, makes it Home and turns on its remote-button service. If the
+The script builds the launcher, installs it, makes it Home and turns on its remote-button service.
+
+To skip the build, download `boxclean-home-<version>.apk` from [Releases](https://github.com/VachaganGrigoryan/BoxClean/releases/latest) and run
+`adb install boxclean-home-<version>.apk`, then
+`adb shell cmd package set-home-activity com.boxclean.home/.MainActivity`. The release APK is signed with a
+debug key: to switch to a copy you built yourself, uninstall the release first. The remote buttons need
+`KeyService` turned on, which `build-install.sh` does for you. If the
 tool skips `setupwraith` because the setup wizard owns your Wi-Fi network, forget the network in Settings,
 join it again, and run the command again.
 
@@ -158,3 +169,7 @@ Checks:
 uv run ruff check . && uv run ruff format --check . && uv run pytest -q
 cd launcher && ./gradlew testReleaseUnitTest lintRelease assembleRelease
 ```
+
+## License
+BoxClean is licensed under the [Apache License 2.0](LICENSE). The parts adapted from CleanYourTV stay under
+their MIT license, and the Outfit font under the SIL Open Font License; see [`NOTICE`](NOTICE).
