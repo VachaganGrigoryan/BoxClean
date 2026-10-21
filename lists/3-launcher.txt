@@ -1,0 +1,5 @@
+# Batch 3: ONLY after com.boxclean.home is installed and claims Home (launcher/build-install.sh).
+# The tool refuses launcherx while nothing else can take Home, and setupwraith while it owns the saved
+# Wi-Fi network: forget the network and re-join it in Settings first. Re-enable both before a factory reset.
+com.google.android.apps.tv.launcherx
+com.google.android.tungsten.setupwraith

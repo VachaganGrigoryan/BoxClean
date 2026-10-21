@@ -1,0 +1,9 @@
+<resources>
+    <!-- Dock apps, in order. Missing ones are skipped; the rest of the apps go in the grid. -->
+    <string-array name="dock_packages" translatable="false">
+        <item>com.google.android.youtube.tv</item>
+        <item>ru.kinopoisk.tv</item>
+        <item>com.wbd.stream</item>
+        <item>com.techcraeft.kinodaran</item>
+    </string-array>
+</resources>

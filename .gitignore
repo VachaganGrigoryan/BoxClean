@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+backups/
+shots/
+*.record.json
+launcher/.gradle/
+launcher/build/
+launcher/app/build/
+launcher/local.properties

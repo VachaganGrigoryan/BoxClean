@@ -1,0 +1,23 @@
+# Batch 2: what the owner said they don't use (2026-10-21).
+# Apply: TV_HOST=<ip> uv run tools/boxclean.py disable lists/2-personal.txt
+# Undo:  TV_HOST=<ip> uv run tools/boxclean.py restore lists/2-personal.txt
+
+# Google extras
+com.google.android.katniss             # Assistant / voice search (mic button stops working)
+com.google.android.apps.mediashell     # Chromecast built-in
+com.google.android.tv.remote.service   # Google TV phone remote
+com.google.android.apps.tv.dreamx      # Ambient screensaver (switch the screensaver away first)
+
+# Preloaded apps
+com.google.android.videos              # Google TV / Play Movies
+com.google.android.play.games
+com.android.printspooler
+com.xiaomi.mimusic2                    # Xiaomi USB media apps
+com.mitv.gallery
+com.xiaomi.mitv.mediaexplorer
+com.mitv.videoplayer
+
+# Xiaomi services
+com.xiaomi.mitv.smartshare             # Miracast
+com.xiaomi.wfdsinkhelperservice        # Miracast sink helper
+com.xiaomo.tv.milegal                  # Xiaomi legal/EULA screens

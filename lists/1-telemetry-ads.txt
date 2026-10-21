@@ -1,0 +1,18 @@
+# Mi Box S 2nd gen (MiTV-AFKR0 "jaws", Google TV 11). Batch 1: telemetry, ads, promos, auto-installs.
+# Draft from Gathin23/cleanyourtv examples/xiaomi-mi-box-s-2nd-gen (tested there); check against your backup.
+# Apply: TV_HOST=<ip> uv run tools/boxclean.py disable lists/1-telemetry-ads.txt
+# Undo:  TV_HOST=<ip> uv run tools/boxclean.py restore lists/1-telemetry-ads.txt
+
+# Telemetry and attribution
+com.miui.tv.analytics                  # Mi analytics
+com.xiaomi.statistic                   # Xiaomi usage stats uploader
+com.google.android.feedback
+com.google.android.partnersetup        # Google RLZ attribution pings
+
+# Ad rows, promos and auto-installs
+com.mitv.tvhome.oemtab                 # Xiaomi ad row
+com.mitv.tvhome.michannel              # Mi content rows
+com.mitv.tvhome.mitvplus               # Mi TV+ ad-funded channels
+com.mitv.tvhome.atv                    # PatchWall
+com.xm.webcontent                      # Xiaomi web promos
+android.autoinstalls.config.xioami.mibox3   # Play auto-install of partner apps (sic, "xioami")

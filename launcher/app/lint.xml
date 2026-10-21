@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <!-- This app is Home itself; it does not list itself in the TV's app row. -->
+    <issue id="MissingLeanbackLauncher" severity="ignore" />
+</lint>
