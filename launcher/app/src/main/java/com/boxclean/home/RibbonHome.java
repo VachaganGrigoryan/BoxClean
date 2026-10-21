@@ -63,9 +63,7 @@ final class RibbonHome extends BaseHome {
                 View item = tile(ribbon, pkg, 16);
                 View card = item.findViewById(R.id.card);
                 item.findViewById(R.id.name).setVisibility(View.GONE);   // the hero title names it instead
-                ViewGroup.LayoutParams lp = card.getLayoutParams();
-                lp.width = Math.round(CARD_W * density);
-                lp.height = Math.round(CARD_H * density);
+                size(card, CARD_W, CARD_H);
                 card.setForeground(activity.getDrawable(R.drawable.tile_rim));
                 hold(card);
                 card.setOnFocusChangeListener((v, focused) -> {

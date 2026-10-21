@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picker sketch of the editorial layout (written by a script from block coordinates). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp" android:height="68dp"
+    android:viewportWidth="120" android:viewportHeight="68">
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M0,0h36v5h-36z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M0,14h44v7h-44z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M0,25h52v8h-52z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M0,37h40v7h-40z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M0,48h48v7h-48z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M0,59h36v7h-36z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M64,14h56v42h-56z" />
+</vector>

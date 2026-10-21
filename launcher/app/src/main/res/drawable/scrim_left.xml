@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Over a blurred backdrop: near-black behind the text on the left, lighter towards the right. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient
+        android:angle="0"
+        android:centerColor="#B3000000"
+        android:endColor="#73000000"
+        android:startColor="#F5000000" />
+</shape>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Top bar for Spotlight and Editorial: time and date, then the Wi-Fi, Settings and Layout pills. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="56dp"
+    android:layout_marginTop="28dp"
+    android:baselineAligned="false"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <TextClock
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/outfit_light"
+        android:format12Hour="h:mm"
+        android:format24Hour="HH:mm"
+        android:includeFontPadding="false"
+        android:textColor="#FFFFFFFF"
+        android:textSize="30sp" />
+
+    <TextClock
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/outfit_regular"
+        android:format12Hour="@string/date_format"
+        android:format24Hour="@string/date_format"
+        android:letterSpacing="0.14"
+        android:textAllCaps="true"
+        android:textColor="#A6FFFFFF"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/wifi"
+        style="@style/Pill"
+        android:drawableStart="@drawable/ic_wifi"
+        android:text="@string/wifi" />
+
+    <TextView
+        android:id="@+id/settings"
+        style="@style/Pill"
+        android:drawableStart="@drawable/ic_settings"
+        android:text="@string/settings" />
+
+    <TextView
+        android:id="@+id/layout"
+        style="@style/Pill"
+        android:drawableStart="@drawable/ic_layout"
+        android:text="@string/layout" />
+</LinearLayout>

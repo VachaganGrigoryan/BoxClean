@@ -1,7 +1,6 @@
 package com.boxclean.home;
 
 import android.app.Activity;
-import android.content.pm.PackageManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +95,6 @@ final class BentoHome extends BaseHome {
     // ---- board ----
 
     private void bindBoard(List<String> pkgs) {
-        PackageManager pm = activity.getPackageManager();
         for (int i = 0; i < SLOTS.length; i++) {
             View cell = find(SLOTS[i]);
             if (i >= pkgs.size()) {
@@ -105,10 +103,7 @@ final class BentoHome extends BaseHome {
                 continue;
             }
             String pkg = pkgs.get(i);
-            // Slots are reused across resumes: clear the icon fallback a previous app may have left.
-            cell.findViewById(R.id.icon).setVisibility(View.GONE);
-            cell.findViewById(R.id.label).setVisibility(View.GONE);
-            Tiles.bind(cell, pkg, labels.get(pkg), pm, 24 * density);
+            bindCard(cell, pkg, 24);
             cell.setOnClickListener(v -> Tiles.launch(activity, pkg));
             cell.setVisibility(View.VISIBLE);
         }

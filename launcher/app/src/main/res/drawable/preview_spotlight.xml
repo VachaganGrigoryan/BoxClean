@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picker sketch of the spotlight layout (written by a script from block coordinates). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp" android:height="68dp"
+    android:viewportWidth="120" android:viewportHeight="68">
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.3" android:pathData="M0,0h120v68h-120z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M8,14h44v25h-44z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M8,44h70v9h-70z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M8,60h4v4h-4z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M15,60h4v4h-4z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M22,60h4v4h-4z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M100,3h16v5h-16z" />
+</vector>

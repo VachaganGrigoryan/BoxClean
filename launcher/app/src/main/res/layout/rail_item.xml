@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One circle in the side rail: an app icon, or a Wi-Fi / Settings / Layout glyph (RailHome). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:layout_marginVertical="6dp"
+    android:background="@drawable/rail_item_bg"
+    android:clickable="true"
+    android:focusable="true">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:duplicateParentState="true"
+        android:importantForAccessibility="no" />
+</FrameLayout>

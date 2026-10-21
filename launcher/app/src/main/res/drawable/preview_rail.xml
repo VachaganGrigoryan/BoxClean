@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picker sketch of the rail layout (written by a script from block coordinates). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp" android:height="68dp"
+    android:viewportWidth="120" android:viewportHeight="68">
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.3" android:pathData="M0,0h14v68h-14z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M3,4h8v8h-8z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M3,16h8v8h-8z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M3,28h8v8h-8z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M3,40h8v8h-8z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M3,56h8v8h-8z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M30,14h56v18h-56z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M30,36h40v5h-40z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M30,50h32v7h-32z" />
+</vector>

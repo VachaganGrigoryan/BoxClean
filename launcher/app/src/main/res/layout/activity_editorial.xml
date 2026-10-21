@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Magazine contents page (EditorialHome): a numbered list of app names on the left, the focused one's
+     banner framed on the right over its blurred backdrop. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/scrim_left" />
+
+    <include layout="@layout/home_header" />
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="460dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="92dp"
+        android:clipToPadding="false"
+        android:fadingEdgeLength="40dp"
+        android:paddingBottom="40dp"
+        android:requiresFadingEdge="vertical"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="44dp"
+            android:paddingEnd="16dp" />
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/card"
+        android:layout_width="360dp"
+        android:layout_height="203dp"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="56dp"
+        android:background="@drawable/cell_app_bg"
+        android:elevation="12dp">
+
+        <include layout="@layout/cell_app" />
+    </FrameLayout>
+</FrameLayout>

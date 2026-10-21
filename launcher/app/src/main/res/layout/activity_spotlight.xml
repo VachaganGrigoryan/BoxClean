@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Cinema home (SpotlightHome): one app on the stage over its blurred backdrop, a strip of all apps below. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false">
+
+    <ImageView
+        android:id="@+id/backdrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/scrim_left" />
+
+    <include layout="@layout/home_header" />
+
+    <!-- One focusable stage: left/right flip its app, OK opens it (SpotlightHome.stageKey). -->
+    <LinearLayout
+        android:id="@+id/stage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="96dp"
+        android:clickable="true"
+        android:clipChildren="false"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/card"
+            android:layout_width="288dp"
+            android:layout_height="162dp"
+            android:background="@drawable/cell_app_bg"
+            android:duplicateParentState="true"
+            android:foreground="@drawable/cell_rim">
+
+            <include layout="@layout/cell_app" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:alpha="0"
+            android:fontFamily="@font/outfit_light"
+            android:includeFontPadding="false"
+            android:letterSpacing="-0.02"
+            android:singleLine="true"
+            android:textColor="#FFFFFFFF"
+            android:textSize="60sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/outfit_medium"
+            android:letterSpacing="0.18"
+            android:text="@string/spotlight_hint"
+            android:textAllCaps="true"
+            android:textColor="#8CFFFFFF"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:id="@+id/dots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal" />
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/strip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="20dp"
+        android:alpha="0"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingHorizontal="44dp"
+        android:scrollbars="none"
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:id="@+id/stripRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingVertical="8dp" />
+    </HorizontalScrollView>
+</FrameLayout>

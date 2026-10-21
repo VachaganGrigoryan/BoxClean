@@ -8,6 +8,10 @@
     <string name="layout_bento">Bento</string>
     <string name="layout_classic">Classic</string>
     <string name="layout_ribbon">Ribbon</string>
+    <string name="layout_spotlight">Spotlight</string>
+    <string name="layout_editorial">Editorial</string>
+    <string name="layout_rail">Side rail</string>
+    <string name="spotlight_hint">OK to open · ↓ all apps</string>
     <string name="good_morning">Good morning</string>
     <string name="good_afternoon">Good afternoon</string>
     <string name="good_evening">Good evening</string>

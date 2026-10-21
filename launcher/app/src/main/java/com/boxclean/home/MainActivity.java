@@ -20,6 +20,9 @@ public class MainActivity extends Activity {
         switch (Layouts.saved(this)) {
             case Layouts.CLASSIC: home = new ClassicHome(this); break;
             case Layouts.RIBBON: home = new RibbonHome(this); break;
+            case Layouts.SPOTLIGHT: home = new SpotlightHome(this); break;
+            case Layouts.EDITORIAL: home = new EditorialHome(this); break;
+            case Layouts.RAIL: home = new RailHome(this); break;
             default: home = new BentoHome(this); break;
         }
         home.handleIntent(getIntent());

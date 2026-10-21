@@ -39,9 +39,14 @@ Turned back on by hand after the batches: `com.netflix.ninja` (for the Netflix b
 Screensaver: `settings put secure screensaver_components com.boxclean.home/.ClockDream`.
 
 ## Home layouts
-Two home screens, switched with the **Layout** button on either one (remembered across reboots):
-- **Bento** (default): a board of rounded cells (clock, the four dock apps, Wi-Fi, Settings, Layout) fills
-  the first screen, and every other app sits in a grid below it.
+Six home screens in one launcher. **Layout** (a button on every one) opens a picker; OK switches, Back closes
+it, and the choice survives reboots.
+- **Bento** (default): a board of rounded cells (clock, the four dock apps, Wi-Fi, Settings, Layout), every
+  other app in a grid below it.
+- **Ribbon**: LG webOS style, the focused app's banner blurred across the screen over one ribbon of cards.
+- **Spotlight**: one dock app at a time, large; left/right flip, Down opens a strip of all apps.
+- **Editorial**: a numbered list of app names, the focused one's banner framed beside it.
+- **Side rail**: round app icons down the left edge next to a big clock.
 - **Classic**: the Apple TV style header, hero name, dock and grid.
 
 Look and motion are adapted from CleanYourTV (MIT); see `NOTICE`.

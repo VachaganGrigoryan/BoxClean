@@ -84,6 +84,19 @@ abstract class BaseHome implements HomeLayout {
         return item;
     }
 
+    /** Shows an app in a reusable card (cell_app.xml views), clearing the icon fallback a previous app left. */
+    protected void bindCard(View card, String pkg, float radiusDp) {
+        card.findViewById(R.id.icon).setVisibility(View.GONE);
+        card.findViewById(R.id.label).setVisibility(View.GONE);
+        Tiles.bind(card, pkg, labels.get(pkg), activity.getPackageManager(), radiusDp * density);
+    }
+
+    protected void size(View v, int widthDp, int heightDp) {
+        ViewGroup.LayoutParams lp = v.getLayoutParams();
+        lp.width = Math.round(widthDp * density);
+        lp.height = Math.round(heightDp * density);
+    }
+
     /** Tiles rise into place one after another (CleanYourTV's tile_enter). */
     protected void animateIn(ViewGroup parent) {
         parent.setLayoutAnimation(new LayoutAnimationController(

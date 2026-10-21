@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One app in the Editorial list: accent bar, number, name. Dim until focused (EditorialHome.addRow). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:alpha="0.45"
+    android:baselineAligned="false"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="5dp">
+
+    <View
+        android:id="@+id/bar"
+        android:layout_width="3dp"
+        android:layout_height="30dp"
+        android:alpha="0"
+        android:background="#FFFFFFFF"
+        android:scaleY="0.3" />
+
+    <TextView
+        android:id="@+id/number"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:fontFamily="@font/outfit_medium"
+        android:letterSpacing="0.1"
+        android:textColor="#FFFFFFFF"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/outfit_light"
+        android:includeFontPadding="false"
+        android:singleLine="true"
+        android:textColor="#FFFFFFFF"
+        android:textSize="34sp" />
+</LinearLayout>
