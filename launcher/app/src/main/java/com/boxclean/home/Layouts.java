@@ -5,8 +5,8 @@ import java.util.List;
 
 /** The home layouts the picker offers, in its order, and the one the user chose. */
 final class Layouts {
-    static final String BENTO = "bento", CLASSIC = "classic";
-    static final List<String> IDS = List.of(BENTO, CLASSIC);
+    static final String BENTO = "bento", CLASSIC = "classic", RIBBON = "ribbon";
+    static final List<String> IDS = List.of(BENTO, RIBBON, CLASSIC);
 
     private Layouts() {}
 
@@ -18,6 +18,7 @@ final class Layouts {
     static int nameRes(String id) {
         switch (id) {
             case CLASSIC: return R.string.layout_classic;
+            case RIBBON: return R.string.layout_ribbon;
             default: return R.string.layout_bento;
         }
     }
@@ -25,6 +26,7 @@ final class Layouts {
     static int previewRes(String id) {
         switch (id) {
             case CLASSIC: return R.drawable.preview_classic;
+            case RIBBON: return R.drawable.preview_ribbon;
             default: return R.drawable.preview_bento;
         }
     }

@@ -193,21 +193,7 @@ final class ClassicHome extends BaseHome {
     // ---- hero title and ambient glow ----
 
     private void showHero(String pkg, View card) {
-        String label = labels.get(pkg);
-        if (label != null && !label.contentEquals(hero.getText())) {
-            hero.animate().cancel();
-            if (hero.getAlpha() == 0f) {
-                hero.setText(label);
-                hero.setTranslationX(0f);
-                hero.animate().alpha(1f).setDuration(260).start();
-            } else {
-                hero.animate().alpha(0f).translationX(-12 * density).setDuration(120).withEndAction(() -> {
-                    hero.setText(label);
-                    hero.setTranslationX(12 * density);
-                    hero.animate().alpha(1f).translationX(0f).setDuration(200).start();
-                }).start();
-            }
-        }
+        swapText(hero, labels.get(pkg));
         Glow.fadeTo(ambient, colorOf(pkg, card));
     }
 }

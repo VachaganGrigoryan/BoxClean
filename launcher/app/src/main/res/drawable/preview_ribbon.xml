@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picker sketch of the ribbon layout (written by a script from block coordinates). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp" android:height="68dp"
+    android:viewportWidth="120" android:viewportHeight="68">
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.3" android:pathData="M0,0h120v44h-120z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M98,3h18v5h-18z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M6,26h40v7h-40z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M0,50h14v18h-14z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="1" android:pathData="M17,46h22v22h-22z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M42,50h14v18h-14z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M59,50h14v18h-14z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M76,50h14v18h-14z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M93,50h14v18h-14z" />
+    <path android:fillColor="#FFFFFFFF" android:fillAlpha="0.55" android:pathData="M110,50h10v18h-10z" />
+</vector>

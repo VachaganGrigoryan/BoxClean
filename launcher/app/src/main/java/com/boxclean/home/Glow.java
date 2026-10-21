@@ -11,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 
 /**
  * The ambient glow: an app's colour, sampled from its banner, and the tinted backdrop that shows it.
@@ -32,6 +33,63 @@ final class Glow {
                 ambient.animate().alpha(1f).setDuration(500).start();
             }).start();
         }
+    }
+
+    /**
+     * Shows a banner blurred across a full-screen ImageView, crossfading through a dim step. API 30 has no
+     * RenderEffect, so it is drawn 32x18, box-blurred, and upscaled smoothly to 192x108 for the GPU to stretch;
+     * a GPU stretch of the tiny bitmap alone shows its pixels.
+     */
+    static void backdrop(ImageView view, Drawable banner) {
+        if (banner == null) return;
+        int w = 32, h = 18;
+        Bitmap small = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Drawable d = copy(banner);
+        d.setBounds(0, 0, w, h);
+        d.draw(new Canvas(small));
+        int[] px = new int[w * h];
+        small.getPixels(px, 0, w, 0, 0, w, h);
+        for (int pass = 0; pass < 3; pass++) px = boxBlur(px, w, h, 2);   // three box passes look Gaussian
+        small.setPixels(px, 0, w, 0, 0, w, h);
+        Bitmap big = Bitmap.createScaledBitmap(small, w * 6, h * 6, true);
+        small.recycle();
+        BitmapDrawable blurred = new BitmapDrawable(view.getResources(), big);
+        blurred.setFilterBitmap(true);
+        view.animate().cancel();
+        view.animate().alpha(0f).setDuration(view.getDrawable() == null ? 0 : 160).withEndAction(() -> {
+            view.setImageDrawable(blurred);
+            view.animate().alpha(1f).setDuration(420).start();
+        }).start();
+    }
+
+    /** One horizontal then one vertical box-blur pass of radius r over ARGB pixels, clamped at the edges. */
+    static int[] boxBlur(int[] px, int w, int h, int r) {
+        int[] tmp = new int[px.length], out = new int[px.length];
+        for (int pass = 0; pass < 2; pass++) {
+            int[] src = pass == 0 ? px : tmp, dst = pass == 0 ? tmp : out;
+            for (int y = 0; y < h; y++) {
+                for (int x = 0; x < w; x++) {
+                    int a = 0, red = 0, green = 0, blue = 0;
+                    for (int k = -r; k <= r; k++) {
+                        int sx = pass == 0 ? Math.min(w - 1, Math.max(0, x + k)) : x;
+                        int sy = pass == 0 ? y : Math.min(h - 1, Math.max(0, y + k));
+                        int p = src[sy * w + sx];
+                        a += p >>> 24;
+                        red += (p >> 16) & 0xFF;
+                        green += (p >> 8) & 0xFF;
+                        blue += p & 0xFF;
+                    }
+                    int n = 2 * r + 1;
+                    dst[y * w + x] = (a / n) << 24 | (red / n) << 16 | (green / n) << 8 | (blue / n);
+                }
+            }
+        }
+        return out;
+    }
+
+    /** A private copy: changing the bounds of the drawable an ImageView shows would blank that view. */
+    private static Drawable copy(Drawable live) {
+        return live.getConstantState() != null ? live.getConstantState().newDrawable().mutate() : live;
     }
 
     /**
@@ -58,8 +116,7 @@ final class Glow {
 
     static int vividColor(Drawable live) {
         if (live == null) return 0xFF444444;
-        // Draw a private copy: changing the bounds of the drawable an ImageView shows would blank the tile.
-        Drawable d = live.getConstantState() != null ? live.getConstantState().newDrawable().mutate() : live;
+        Drawable d = copy(live);
         Rect saved = new Rect(d.getBounds());
         int n = 12;
         Bitmap bmp = Bitmap.createBitmap(n, n, Bitmap.Config.ARGB_8888);

@@ -19,10 +19,18 @@ public class MainActivity extends Activity {
         super.onCreate(state);
         switch (Layouts.saved(this)) {
             case Layouts.CLASSIC: home = new ClassicHome(this); break;
+            case Layouts.RIBBON: home = new RibbonHome(this); break;
             default: home = new BentoHome(this); break;
         }
         home.handleIntent(getIntent());
     }
+
+    /**
+     * Restores nothing: after the picker's recreate() the saved views are the old layout's, matched by id (a
+     * ScrollView's state handed to a HorizontalScrollView crashes), and every layout rebuilds itself on resume.
+     */
+    @Override
+    protected void onRestoreInstanceState(Bundle state) {}
 
     @Override
     protected void onNewIntent(Intent intent) {

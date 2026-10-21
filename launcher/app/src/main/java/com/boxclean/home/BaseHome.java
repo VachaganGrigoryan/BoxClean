@@ -108,6 +108,23 @@ abstract class BaseHome implements HomeLayout {
         layout.setOnClickListener(v -> LayoutPicker.show(activity));
     }
 
+    /** Swaps a title's text: the old one slides out left, the new one in from the right. */
+    protected void swapText(TextView view, String text) {
+        if (text == null || text.contentEquals(view.getText())) return;
+        view.animate().cancel();
+        if (view.getAlpha() == 0f) {
+            view.setText(text);
+            view.setTranslationX(0f);
+            view.animate().alpha(1f).setDuration(260).start();
+        } else {
+            view.animate().alpha(0f).translationX(-12 * density).setDuration(120).withEndAction(() -> {
+                view.setText(text);
+                view.setTranslationX(12 * density);
+                view.animate().alpha(1f).translationX(0f).setDuration(200).start();
+            }).start();
+        }
+    }
+
     static int greetingRes() {
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         return hour < 5 ? R.string.good_night : hour < 12 ? R.string.good_morning
