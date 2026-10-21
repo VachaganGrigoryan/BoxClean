@@ -21,4 +21,11 @@ final class Apps {
         out.sort((a, b) -> labels.get(a).compareToIgnoreCase(labels.get(b)));
         return out;
     }
+
+    /** The bento board's app slots: the dock first, topped up from the grid when the dock is short. */
+    static List<String> board(List<String> dock, List<String> grid, int slots) {
+        List<String> out = new ArrayList<>(dock);
+        out.addAll(grid);
+        return new ArrayList<>(out.subList(0, Math.min(slots, out.size())));
+    }
 }

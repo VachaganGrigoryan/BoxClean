@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bento home (BentoHome): a board of rounded cells fills the first screen, the other apps sit below it.
+     The board's D-pad moves are fixed here; down to / up from the app grid is in code.
+
+     [ clock      ][ app1      ]
+     [ app2 ][ app3 ][   2x2   ]
+     [ app4 ][ wifi ][ settings ][ layout ]  -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Ambient glow, tinted with the focused app's colour; the cells' frosted glass sits over it. -->
+    <View
+        android:id="@+id/ambient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0" />
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingHorizontal="40dp"
+            android:paddingTop="32dp"
+            android:paddingBottom="48dp">
+
+            <!-- Height set in code (BentoHome.sizeBoard) so the "All apps" title peeks below it. -->
+            <LinearLayout
+                android:id="@+id/board"
+                android:layout_width="match_parent"
+                android:layout_height="440dp"
+                android:clipChildren="false"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:baselineAligned="false"
+                    android:clipChildren="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:clipChildren="false"
+                        android:orientation="vertical">
+
+                        <!-- Weights split space after margins, so margined cells sit in margin-less frames. -->
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="8dp"
+                            android:background="@drawable/cell_bg"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="24dp">
+
+                            <TextView
+                                android:id="@+id/greeting"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/outfit_medium"
+                                android:letterSpacing="0.22"
+                                android:textAllCaps="true"
+                                android:textColor="#8CFFFFFF"
+                                android:textSize="12sp" />
+
+                            <TextClock
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/outfit_light"
+                                android:format12Hour="h:mm"
+                                android:format24Hour="HH:mm"
+                                android:includeFontPadding="false"
+                                android:letterSpacing="-0.04"
+                                android:textColor="#FFFFFFFF"
+                                android:textSize="56sp" />
+
+                            <TextClock
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/outfit_regular"
+                                android:format12Hour="@string/date_format"
+                                android:format24Hour="@string/date_format"
+                                android:letterSpacing="0.14"
+                                android:textAllCaps="true"
+                                android:textColor="#A6FFFFFF"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:baselineAligned="false"
+                            android:clipChildren="false"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:id="@+id/app2"
+                                style="@style/Cell.App"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:nextFocusLeft="@id/app2"
+                                android:nextFocusRight="@+id/app3"
+                                android:nextFocusUp="@id/app2"
+                                android:nextFocusDown="@+id/app4">
+
+                                <include layout="@layout/cell_app" />
+                            </FrameLayout>
+
+                            <FrameLayout
+                                android:id="@id/app3"
+                                style="@style/Cell.App"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:nextFocusLeft="@id/app2"
+                                android:nextFocusRight="@+id/app1"
+                                android:nextFocusUp="@id/app3"
+                                android:nextFocusDown="@+id/wifi">
+
+                                <include layout="@layout/cell_app" />
+                            </FrameLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:clipChildren="false">
+
+                    <FrameLayout
+                        android:id="@id/app1"
+                        style="@style/Cell.App"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:nextFocusLeft="@id/app3"
+                        android:nextFocusRight="@id/app1"
+                        android:nextFocusUp="@id/app1"
+                        android:nextFocusDown="@+id/settings">
+
+                        <include layout="@layout/cell_app" />
+                    </FrameLayout>
+                    </FrameLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:baselineAligned="false"
+                    android:clipChildren="false"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:id="@id/app4"
+                        style="@style/Cell.App"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:nextFocusLeft="@id/app4"
+                        android:nextFocusRight="@id/wifi"
+                        android:nextFocusUp="@id/app2">
+
+                        <include layout="@layout/cell_app" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@id/wifi"
+                        style="@style/Cell"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/wifi"
+                        android:nextFocusLeft="@id/app4"
+                        android:nextFocusRight="@id/settings"
+                        android:nextFocusUp="@id/app3">
+
+                        <ImageView style="@style/CellIcon" android:importantForAccessibility="no" android:src="@drawable/ic_wifi" />
+                        <TextView style="@style/CellLabel" android:text="@string/wifi" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@id/settings"
+                        style="@style/Cell"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/settings"
+                        android:nextFocusLeft="@id/wifi"
+                        android:nextFocusRight="@+id/layout"
+                        android:nextFocusUp="@id/app1">
+
+                        <ImageView style="@style/CellIcon" android:importantForAccessibility="no" android:src="@drawable/ic_settings" />
+                        <TextView style="@style/CellLabel" android:text="@string/settings" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@id/layout"
+                        style="@style/Cell"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/layout"
+                        android:nextFocusLeft="@id/settings"
+                        android:nextFocusRight="@id/layout"
+                        android:nextFocusUp="@id/app1">
+
+                        <ImageView style="@style/CellIcon" android:importantForAccessibility="no" android:src="@drawable/ic_layout" />
+                        <TextView style="@style/CellLabel" android:text="@string/layout" />
+                    </FrameLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="22dp"
+                android:fontFamily="@font/outfit_medium"
+                android:letterSpacing="0.22"
+                android:text="@string/all_apps"
+                android:textAllCaps="true"
+                android:textColor="#8CFFFFFF"
+                android:textSize="12sp" />
+
+            <GridLayout
+                android:id="@+id/grid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:columnCount="4" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

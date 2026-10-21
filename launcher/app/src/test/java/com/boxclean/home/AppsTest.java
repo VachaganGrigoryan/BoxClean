@@ -25,4 +25,16 @@ public class AppsTest {
         assertEquals(List.of("com.a", "com.b", "com.netflix.ninja"),
                 Apps.grid(List.of("com.yt"), labels, "com.boxclean.home"));
     }
+
+    @Test
+    public void boardTopsUpAShortDockFromTheGrid() {
+        assertEquals(List.of("com.yt", "com.a", "com.b", "com.c"),
+                Apps.board(List.of("com.yt"), List.of("com.a", "com.b", "com.c", "com.d"), 4));
+    }
+
+    @Test
+    public void boardTakesOnlyItsSlotsAndMayStayShort() {
+        assertEquals(List.of("1", "2", "3", "4"), Apps.board(List.of("1", "2", "3", "4", "5"), List.of("6"), 4));
+        assertEquals(List.of("1", "2"), Apps.board(List.of("1"), List.of("2"), 4));
+    }
 }

@@ -124,6 +124,12 @@
                         style="@style/Pill"
                         android:drawableStart="@drawable/ic_settings"
                         android:text="@string/settings" />
+
+                    <TextView
+                        android:id="@+id/layout"
+                        style="@style/Pill"
+                        android:drawableStart="@drawable/ic_layout"
+                        android:text="@string/layout" />
                 </LinearLayout>
 
                 <!-- Grows so the dock sits low on the first screen (MainActivity.sizeSpacer). -->

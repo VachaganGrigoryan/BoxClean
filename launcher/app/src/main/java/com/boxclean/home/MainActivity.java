@@ -1,34 +1,21 @@
 package com.boxclean.home;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Outline;
-import android.graphics.Paint;
-import android.graphics.RadialGradient;
 import android.graphics.Rect;
-import android.graphics.Shader;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewOutlineProvider;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -63,12 +50,29 @@ public class MainActivity extends Activity {
     private List<String> shown = List.of();
     private String lastFocused;
     private boolean showApps;
-    private int ambientColor;
     private View glassOn;
+    /** Set when the bento layout is on; it then runs the whole screen and the classic fields stay unused. */
+    private BentoHome bento;
+
+    /** Which home layout to show: bento (the default) or this classic one. */
+    static boolean bentoOn(Context context) {
+        return context.getSharedPreferences("home", MODE_PRIVATE).getBoolean("bento", true);
+    }
+
+    /** The Layout button on either home: flip to the other layout and rebuild the screen. */
+    static void switchLayout(Activity activity) {
+        activity.getSharedPreferences("home", MODE_PRIVATE).edit().putBoolean("bento", !bentoOn(activity)).apply();
+        activity.recreate();
+    }
 
     @Override
     protected void onCreate(Bundle state) {
         super.onCreate(state);
+        if (bentoOn(this)) {
+            bento = new BentoHome(this);
+            bento.handleIntent(getIntent());
+            return;
+        }
         setContentView(R.layout.activity_main);
         density = getResources().getDisplayMetrics().density;
         scroll = findViewById(R.id.scroll);
@@ -90,6 +94,7 @@ public class MainActivity extends Activity {
 
         setUpPill(findViewById(R.id.wifi), new Intent(Settings.ACTION_WIFI_SETTINGS));
         setUpPill(findViewById(R.id.settings), new Intent(Settings.ACTION_SETTINGS));
+        setUpPill(findViewById(R.id.layout), null);
         content.addOnLayoutChangeListener((v, l, t, r, b, ol, ot, or, ob) -> {
             sizeSpacer();
             if (glassOn != null) placeGlass(glassOn, false);
@@ -100,7 +105,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        handleIntent(intent);
+        if (bento != null) bento.handleIntent(intent);
+        else handleIntent(intent);
     }
 
     /** Home pressed again, or the Apps button: start over from the dock, or from the app grid. */
@@ -112,9 +118,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (bento != null) {
+            bento.resume();
+            return;
+        }
         updateGreeting();
         // Re-read on every resume: cheap, and catches installs/uninstalls without a receiver.
-        labels = tvApps();
+        labels = Tiles.tvApps(getPackageManager());
         List<String> dockPkgs = Apps.dock(
                 Arrays.asList(getResources().getStringArray(R.array.dock_packages)), labels.keySet());
         List<String> gridPkgs = Apps.grid(dockPkgs, labels, getPackageName());
@@ -140,6 +150,10 @@ public class MainActivity extends Activity {
     @SuppressWarnings("deprecation")
     @Override
     public void onBackPressed() {
+        if (bento != null) {
+            bento.back();
+            return;
+        }
         // This is Home: Back returns to the first dock app at the top, like the stock launcher.
         View first = dock.getChildCount() > 0 ? cardAt(dock, 0) : cardAt(grid, 0);
         if (first == null) return;
@@ -149,52 +163,18 @@ public class MainActivity extends Activity {
 
     // ---- apps ----
 
-    private Map<String, String> tvApps() {
-        PackageManager pm = getPackageManager();
-        Intent main = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LEANBACK_LAUNCHER);
-        Map<String, String> out = new HashMap<>();
-        for (ResolveInfo ri : pm.queryIntentActivities(main, 0)) {
-            out.put(ri.activityInfo.packageName, ri.loadLabel(pm).toString());
-        }
-        return out;
-    }
-
     private void fill(ViewGroup parent, List<String> pkgs, boolean inDock) {
         parent.removeAllViews();
         LayoutInflater inflater = getLayoutInflater();
-        PackageManager pm = getPackageManager();
         for (String pkg : pkgs) {
             View item = inflater.inflate(R.layout.tile, parent, false);
             View card = item.findViewById(R.id.card);
             TextView name = item.findViewById(R.id.name);
             String label = labels.get(pkg);
-            Drawable banner = null;
-            try {
-                banner = pm.getApplicationBanner(pkg);
-                if (banner == null) {
-                    ImageView icon = item.findViewById(R.id.icon);
-                    TextView text = item.findViewById(R.id.label);
-                    icon.setImageDrawable(pm.getApplicationIcon(pkg));
-                    icon.setVisibility(View.VISIBLE);
-                    text.setText(label);
-                    text.setVisibility(View.VISIBLE);
-                }
-            } catch (PackageManager.NameNotFoundException ignored) {
-                // Uninstalled between query and bind: the next resume drops it.
-            }
-            ((ImageView) item.findViewById(R.id.banner)).setImageDrawable(banner);
+            Tiles.bind(card, pkg, label, getPackageManager(), 16 * density);
             name.setText(label);
             if (inDock) name.setVisibility(View.GONE);   // the dock's name is the big hero title instead
-            card.setTag(pkg);
-            card.setContentDescription(label);
-            card.setOutlineProvider(new ViewOutlineProvider() {
-                @Override
-                public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), 16 * density);
-                }
-            });
-            card.setClipToOutline(true);
-            card.setOnClickListener(v -> launch(pkg));
+            card.setOnClickListener(v -> Tiles.launch(this, pkg));
             card.setOnKeyListener((v, keyCode, event) ->
                     event.getAction() == KeyEvent.ACTION_DOWN && navigate(inDock, parent.indexOfChild(item), keyCode));
             card.setOnFocusChangeListener((v, focused) -> onTileFocus(v, name, pkg, inDock, focused));
@@ -210,33 +190,12 @@ public class MainActivity extends Activity {
         return i >= 0 && i < parent.getChildCount() ? parent.getChildAt(i).findViewById(R.id.card) : null;
     }
 
-    private void launch(String pkg) {
-        PackageManager pm = getPackageManager();
-        Intent intent = pm.getLeanbackLaunchIntentForPackage(pkg);
-        if (intent == null) intent = pm.getLaunchIntentForPackage(pkg);
-        if (intent != null) start(intent);
-    }
-
-    private void start(Intent intent) {
-        try {
-            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-        } catch (ActivityNotFoundException | SecurityException e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
     // ---- focus, navigation, glass ----
 
     /** Deterministic D-pad: one row at a time, no wrapping, dock and grid columns line up. */
     private boolean navigate(boolean inDock, int pos, int keyCode) {
-        int dir;
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_DPAD_LEFT: dir = GridNavigation.LEFT; break;
-            case KeyEvent.KEYCODE_DPAD_RIGHT: dir = GridNavigation.RIGHT; break;
-            case KeyEvent.KEYCODE_DPAD_UP: dir = GridNavigation.UP; break;
-            case KeyEvent.KEYCODE_DPAD_DOWN: dir = GridNavigation.DOWN; break;
-            default: return false;
-        }
+        int dir = GridNavigation.direction(keyCode);
+        if (dir < 0) return false;
         ViewGroup here = inDock ? dock : grid;
         int next = GridNavigation.next(pos, here.getChildCount(), COLUMNS, dir);
         View target;
@@ -272,20 +231,8 @@ public class MainActivity extends Activity {
             scroll.smoothScrollTo(0, 0);   // focus scrolling only reveals the tile; show the header too
             showHero(pkg);
         } else {
-            reveal((View) card.getParent());
+            Tiles.reveal(scroll, content, (View) card.getParent());
         }
-    }
-
-    /** Scrolls just enough to show a grid tile with its name, plus a little room (CleanYourTV's grid scroll). */
-    private void reveal(View item) {
-        scroll.post(() -> {
-            Rect r = new Rect(0, 0, item.getWidth(), item.getHeight());
-            content.offsetDescendantRectToMyCoords(item, r);
-            int top = r.top - Math.round(12 * density), bottom = r.bottom + Math.round(12 * density);
-            int y = scroll.getScrollY(), h = scroll.getHeight();
-            if (bottom > y + h) scroll.smoothScrollTo(0, bottom - h);
-            else if (top < y) scroll.smoothScrollTo(0, top);
-        });
     }
 
     /** Glides the glass onto a card; the first time (or after the pills) it fades in in place. */
@@ -306,7 +253,11 @@ public class MainActivity extends Activity {
     }
 
     private void setUpPill(View pill, Intent intent) {
-        pill.setOnClickListener(v -> start(intent));
+        // No intent: the Layout pill.
+        pill.setOnClickListener(v -> {
+            if (intent == null) switchLayout(this);
+            else Tiles.start(this, intent);
+        });
         pill.setOnFocusChangeListener((v, focused) -> {
             if (!focused) return;
             glassOn = null;   // the pill has its own focused look
@@ -355,45 +306,16 @@ public class MainActivity extends Activity {
                 }).start();
             }
         }
-        if (color == ambientColor && ambient.getBackground() != null) return;
-        ambient.animate().cancel();
-        if (ambient.getBackground() == null) {
-            setAmbient(color);
-            ambient.animate().alpha(1f).setDuration(600).start();
-        } else {
-            ambient.animate().alpha(0.35f).setDuration(200).withEndAction(() -> {
-                setAmbient(color);
-                ambient.animate().alpha(1f).setDuration(500).start();
-            }).start();
-        }
-    }
-
-    /**
-     * A small white radial-gradient bitmap stretched over the screen and tinted: one GPU texture, where a
-     * full-screen GradientDrawable is redrawn on the CPU (CleanYourTV's setAmbient, MIT, see NOTICE).
-     */
-    private void setAmbient(int color) {
-        ambientColor = color;
-        BitmapDrawable glow = (BitmapDrawable) ambient.getBackground();
-        if (glow == null) {
-            int w = 480, h = 270;
-            Bitmap bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-            Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            paint.setShader(new RadialGradient(w * 0.32f, h * 0.42f, w * 0.62f,
-                    new int[]{0x5CFFFFFF, 0x26FFFFFF, 0x00FFFFFF}, new float[]{0f, 0.45f, 1f},
-                    Shader.TileMode.CLAMP));
-            new Canvas(bmp).drawRect(0, 0, w, h, paint);
-            glow = new BitmapDrawable(getResources(), bmp);
-            glow.setGravity(Gravity.FILL);
-            ambient.setBackground(glow);
-        }
-        glow.setTint(0xFF000000 | color);   // SRC_IN keeps the mask's alpha, takes the colour
+        Glow.fadeTo(ambient, color);
     }
 
     private void updateGreeting() {
+        greeting.setText(greetingRes());
+    }
+
+    static int greetingRes() {
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        int res = hour < 5 ? R.string.good_night : hour < 12 ? R.string.good_morning
+        return hour < 5 ? R.string.good_night : hour < 12 ? R.string.good_morning
                 : hour < 17 ? R.string.good_afternoon : hour < 22 ? R.string.good_evening : R.string.good_night;
-        greeting.setText(res);
     }
 }

@@ -3,12 +3,58 @@ package com.boxclean.home;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RadialGradient;
 import android.graphics.Rect;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.Gravity;
+import android.view.View;
 
-/** The ambient colour of an app, sampled from its banner. Ported from CleanYourTV's AppAdapter (MIT, see NOTICE). */
+/**
+ * The ambient glow: an app's colour, sampled from its banner, and the tinted backdrop that shows it.
+ * Ported from CleanYourTV's AppAdapter and setAmbient (MIT, see NOTICE).
+ */
 final class Glow {
     private Glow() {}
+
+    /** Crossfades the full-screen ambient view to a colour, through a dim step; a no-op if it already shows it. */
+    static void fadeTo(View ambient, int color) {
+        if (ambient.getBackground() != null && Integer.valueOf(color).equals(ambient.getTag())) return;
+        ambient.animate().cancel();
+        if (ambient.getBackground() == null) {
+            tint(ambient, color);
+            ambient.animate().alpha(1f).setDuration(600).start();
+        } else {
+            ambient.animate().alpha(0.35f).setDuration(200).withEndAction(() -> {
+                tint(ambient, color);
+                ambient.animate().alpha(1f).setDuration(500).start();
+            }).start();
+        }
+    }
+
+    /**
+     * A small white radial-gradient bitmap stretched over the screen and tinted: one GPU texture, where a
+     * full-screen GradientDrawable is redrawn on the CPU (CleanYourTV's setAmbient, MIT, see NOTICE).
+     */
+    private static void tint(View ambient, int color) {
+        ambient.setTag(color);
+        BitmapDrawable glow = (BitmapDrawable) ambient.getBackground();
+        if (glow == null) {
+            int w = 480, h = 270;
+            Bitmap bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+            Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            paint.setShader(new RadialGradient(w * 0.32f, h * 0.42f, w * 0.62f,
+                    new int[]{0x5CFFFFFF, 0x26FFFFFF, 0x00FFFFFF}, new float[]{0f, 0.45f, 1f},
+                    Shader.TileMode.CLAMP));
+            new Canvas(bmp).drawRect(0, 0, w, h, paint);
+            glow = new BitmapDrawable(ambient.getResources(), bmp);
+            glow.setGravity(Gravity.FILL);
+            ambient.setBackground(glow);
+        }
+        glow.setTint(0xFF000000 | color);   // SRC_IN keeps the mask's alpha, takes the colour
+    }
 
     static int vividColor(Drawable live) {
         if (live == null) return 0xFF444444;

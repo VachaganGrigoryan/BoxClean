@@ -23,4 +23,37 @@
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
     </style>
+
+    <!-- A bento board cell: focusable, a 16dp gap to its neighbours (8dp each side). -->
+    <style name="Cell">
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:background">@drawable/cell_bg</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="Cell.App">
+        <item name="android:background">@drawable/cell_app_bg</item>
+        <item name="android:foreground">@drawable/cell_rim</item>
+    </style>
+
+    <!-- Icon top-left and label bottom-left of a Wi-Fi / Settings / Layout cell; dark on the white focus. -->
+    <style name="CellIcon">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:duplicateParentState">true</item>
+        <item name="android:tint">@color/pill_text</item>
+    </style>
+
+    <style name="CellLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">bottom|start</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:duplicateParentState">true</item>
+        <item name="android:fontFamily">@font/outfit_medium</item>
+        <item name="android:textColor">@color/pill_text</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>

@@ -1,5 +1,7 @@
 package com.boxclean.home;
 
+import android.view.KeyEvent;
+
 /**
  * D-pad moves in a row-major grid: left/right never wrap at a row end, up/down move exactly one row.
  * Pure, so it is unit-tested off the TV. Idea from CleanYourTV's GridNavigation (MIT, see NOTICE).
@@ -10,6 +12,17 @@ final class GridNavigation {
     static final int STAY = -1, UP_OUT = -2, DOWN_OUT = -3;
 
     private GridNavigation() {}
+
+    /** The direction a D-pad key moves in, or -1 for any other key. */
+    static int direction(int keyCode) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_LEFT: return LEFT;
+            case KeyEvent.KEYCODE_DPAD_RIGHT: return RIGHT;
+            case KeyEvent.KEYCODE_DPAD_UP: return UP;
+            case KeyEvent.KEYCODE_DPAD_DOWN: return DOWN;
+            default: return -1;
+        }
+    }
 
     static int next(int pos, int count, int columns, int direction) {
         int row = pos / columns, col = pos % columns, lastRow = (count - 1) / columns;

@@ -38,6 +38,12 @@ Check it with `adb shell dumpsys accessibility | grep -A3 'Bound services'`.
 Turned back on by hand after the batches: `com.netflix.ninja` (for the Netflix button).
 Screensaver: `settings put secure screensaver_components com.boxclean.home/.ClockDream`.
 
+## Home layouts
+Two home screens, switched with the **Layout** button on either one (remembered across reboots):
+- **Bento** (default): a board of rounded cells (clock, the four dock apps, Wi-Fi, Settings, Layout) fills
+  the first screen, and every other app sits in a grid below it.
+- **Classic**: the Apple TV style header, hero name, dock and grid.
+
 Look and motion are adapted from CleanYourTV (MIT); see `NOTICE`.
 
 ## Checks
