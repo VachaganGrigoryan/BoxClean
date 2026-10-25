@@ -8,7 +8,7 @@
 auto-installs from Google TV over network ADB. It then replaces the stock home screen with a small offline
 launcher that has six layouts to choose from.
 
-🌐 **[boxclean.vachagan.dev](https://boxclean.vachagan.dev)** (coming soon)
+🌐 **[boxclean.vachagan.dev](https://boxclean.vachagan.dev)**
 
 <p align="center">
   <img src="docs/media/demo.gif" alt="Moving focus across the Bento home, opening the layout picker and switching to the Ribbon layout" width="800">
