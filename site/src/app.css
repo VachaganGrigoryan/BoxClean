@@ -1,0 +1,79 @@
+:root {
+  --room: #0B1020;
+  --surface: #141A2E;
+  --line: #262E48;
+  --text: #E8EBF4;
+  --soft: #C9CEDD;
+  --muted: #8C94AE;
+  --sans: "Bricolage Grotesque", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --gutter: clamp(16px, 5vw, 72px);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; overflow-x: clip; }
+body {
+  margin: 0;
+  background: var(--room);
+  color: var(--text);
+  font: 400 1.0625rem/1.6 var(--sans);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+img, video { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); text-underline-offset: .2em; }
+a:hover { text-decoration-color: currentColor; }
+:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 4px; }
+code { font-family: var(--mono); font-size: .86em; }
+
+main { position: relative; z-index: 1; }
+.wrap { max-width: 1320px; margin: 0 auto; padding-inline: var(--gutter); }
+
+/* text sits on the side of the room the TV is not on */
+.panel { width: min(100%, 31rem); }
+.panel.right { margin-left: auto; }
+.panel.wide { width: min(100%, 36rem); }
+
+h1, h2 { font-weight: 600; margin: 0 0 18px; text-wrap: balance; }
+h1 {
+  font-size: clamp(2.8rem, 5.6vw, 5.2rem);
+  line-height: .96;
+  letter-spacing: -.024em;
+  font-variation-settings: "opsz" 96;
+}
+h2 {
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  line-height: 1.02;
+  letter-spacing: -.026em;
+  font-variation-settings: "opsz" 72;
+}
+h3 { font-size: 1.3rem; line-height: 1.2; letter-spacing: -.015em; font-weight: 600; margin: 0 0 10px; }
+p { margin: 0 0 16px; }
+.soft { color: var(--soft); }
+.muted { color: var(--muted); }
+.small { font-size: .9rem; color: var(--muted); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 13px 22px;
+  border-radius: 999px;
+  font-weight: 550; font-size: 1rem;
+  text-decoration: none;
+  border: 1px solid var(--line);
+  background: rgb(11 16 32 / .5);
+  backdrop-filter: blur(8px);
+  transition: background .2s, border-color .2s;
+}
+.btn:hover { border-color: #4A5480; }
+.btn.primary { background: var(--text); color: var(--room); border-color: var(--text); }
+.btn.primary:hover { background: #fff; }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+@media (max-width: 860px) {
+  .panel, .panel.wide { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
